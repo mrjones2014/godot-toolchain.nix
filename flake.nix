@@ -6,7 +6,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
@@ -31,16 +31,11 @@
           '';
         in pkgs.mkShell {
           buildInputs = shellPackages ++ [
-            # make sure you can `nohup godot &`
-            pkgs.coreutils
+            pkgs.coreutils # make sure you can `nohup godot &`
+            godot_nvim
           ];
           shellHook = ''
-            #!${pkgs.bash}/bin/bash
-
-            alias vi="${godot_nvim}/bin/godot_nvim"
-            alias vim="${godot_nvim}/bin/godot_nvim"
-            alias nvim="${godot_nvim}/bin/godot_nvim"
-            echo "run 'nohup godot4 &' to start Godot GUI"
+            echo "You can launch Godot GUI via \`nohup godot4 &\`"
           '';
         };
       });
