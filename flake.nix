@@ -34,9 +34,6 @@
             pkgs.coreutils # make sure you can `nohup godot &`
             godot_nvim
           ];
-          shellHook = ''
-            echo "You can launch Godot GUI via \`nohup godot4 &\`"
-          '';
         };
       });
 }
