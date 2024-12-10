@@ -19,16 +19,15 @@
 
             server_path="$HOME/.cache/nvim/godot-server.sock";
             server_startup_delay=0.1 # delay in SECONDS, may need adjusted based on your nvim startup time
-            term_cmd="wezterm"
 
             start_server() {
-              "$term_cmd" -e $(${pkgs.which}/bin/which nvim) --listen "$server_path"
+              "$(${pkgs.which}/bin/which wezterm)" -e $(${pkgs.which}/bin/which nvim) --listen "$server_path"
             }
 
             open_file_in_remote_nvim() {
               # escape characters that nvim won't
               filename=$(printf %q "$1")
-              "$term_cmd" -e $(${pkgs.which}/bin/which nvim) --server "$server_path" --remote-send "<C-\><C-n>:n $filename<CR>:call cursor($2)<CR>"
+              "$(${pkgs.which}/bin/which wezterm)" -e $(${pkgs.which}/bin/which nvim) --server "$server_path" --remote-send "<C-\><C-n>:n $filename<CR>:call cursor($2)<CR>"
             }
 
             if ! [ -e "$server_path" ]; then
